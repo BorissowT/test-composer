@@ -5,4 +5,8 @@ public class BaseTestImpl implements IBaseTest {
     public ThenImpl Then;
 
 
+    @Override
+    public void validate() {
+
+    }
 }

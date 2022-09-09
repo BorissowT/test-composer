@@ -20,7 +20,9 @@ public class TestMachineImpl implements ITestMachine {
 
     @Override
     public void inputTestPath(String path) {
-        actualTest = fileLoader.read(path);
+        IBaseTest testResult = fileLoader.read(path);
+        testResult.validate();
+        actualTest = testResult;
     }
 
     @Override

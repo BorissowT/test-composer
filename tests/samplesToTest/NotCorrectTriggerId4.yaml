@@ -1,0 +1,9 @@
+When:
+
+  with_name: test.foo
+  in_directory: /foo/bar
+Then:
+  triggerId: File Created
+  after: 2s
+  file_count: 0
+  in_directory: /foo/bar
