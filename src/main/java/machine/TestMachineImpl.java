@@ -3,22 +3,24 @@ package machine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import commands.BaseTestImpl;
+import commands.IBaseTest;
+import fileLoader.IFileLoader;
 import settings.ISettingsSet;
 
 import java.io.File;
 import java.io.IOException;
 
 public class TestMachineImpl implements ITestMachine {
-    @Override
-    public void readTestFile(String path) {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        BaseTestImpl order = null;
-        try {
-            order = mapper.readValue(new File(path), BaseTestImpl.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    IFileLoader fileLoader;
+    IBaseTest actualTest;
 
+    public TestMachineImpl(IFileLoader fileLoader) {
+        this.fileLoader = fileLoader;
+    }
+
+    @Override
+    public void inputTestPath(String path) {
+        actualTest = fileLoader.read(path);
     }
 
     @Override
@@ -27,7 +29,7 @@ public class TestMachineImpl implements ITestMachine {
     }
 
     @Override
-    public void run() {
-
+    public boolean run() {
+        return true;
     }
 }
