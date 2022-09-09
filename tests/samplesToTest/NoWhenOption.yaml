@@ -1,0 +1,6 @@
+
+Then:
+  triggerId: File Count
+  after: 2s
+  file_count: 0
+  in_directory: /foo/bar

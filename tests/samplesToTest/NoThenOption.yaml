@@ -1,0 +1,4 @@
+When:
+  triggerId: File Created
+  with_name: test.foo
+  in_directory: /foo/bar
