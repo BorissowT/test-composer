@@ -1,3 +1,4 @@
+import commands.AfterCommand;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
 import machine.TestMachineImpl;
@@ -9,8 +10,10 @@ public class App {
         ITestMachine TestMachine = new TestMachineImpl(new YamlReaderImpl());
         ISettingsSet Settings = new SettingsImpl();
 
+        Settings.addCommand(new AfterCommand());
+
         TestMachine.loadSettings(Settings);
-        TestMachine.inputTestPath("src/testSamples/test1.yaml");
+        TestMachine.inputTestPath("src/main/java/testCases/test1.yaml");
         TestMachine.run();
     }
 }

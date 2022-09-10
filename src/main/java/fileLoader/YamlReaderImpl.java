@@ -18,6 +18,7 @@ public class YamlReaderImpl implements IFileLoader{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        FileObject.load();
         return FileObject;
     }
 }

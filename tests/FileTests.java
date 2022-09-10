@@ -28,14 +28,14 @@ public class FileTests {
     }
 
     @Test
-    public void whenHasNoRequiredFieldsTest(){
-        TestMachine.inputTestPath("tests/samplesToTest/WhenHasNoRequiredFieldsTest.yaml");
+    public void fileCreatedHasNoRequiredFieldsTest(){
+        TestMachine.inputTestPath("tests/samplesToTest/FileCreatedHasNoRequiredFieldsTest.yaml");
         Assertions.assertThrows(RequiredFieldIsNotSpecifiedException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void thenHasNoRequiredFieldsTest(){
-        TestMachine.inputTestPath("tests/samplesToTest/ThenHasNoRequiredFieldsTest.yaml");
+    public void fileCountHasNoRequiredFieldsTest(){
+        TestMachine.inputTestPath("tests/samplesToTest/FileCountHasNoRequiredFieldsTest.yaml");
         Assertions.assertThrows(RequiredFieldIsNotSpecifiedException.class, ()->{TestMachine.run();});
     }
 

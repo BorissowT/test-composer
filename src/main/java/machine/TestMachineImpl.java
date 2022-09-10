@@ -13,6 +13,7 @@ import java.io.IOException;
 public class TestMachineImpl implements ITestMachine {
     IFileLoader fileLoader;
     IBaseTest actualTest;
+    ISettingsSet settings;
 
     public TestMachineImpl(IFileLoader fileLoader) {
         this.fileLoader = fileLoader;
@@ -27,11 +28,17 @@ public class TestMachineImpl implements ITestMachine {
 
     @Override
     public void loadSettings(ISettingsSet settings) {
-
+        this.settings = settings;
     }
 
     @Override
     public boolean run() {
+        actualTest.getWhenCommands().forEach((key, value)->{
+            settings.executeCommandByName(key,value);
+        });
+        actualTest.getThenCommands().forEach((key, value)->{
+            settings.executeCommandByName(key,value);
+        });
         return true;
     }
 }
