@@ -1,15 +1,13 @@
 package commands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class BaseTestImpl implements IBaseTest {
     public WhenImpl When;
     public ThenImpl Then;
 
-    HashMap<String, String> commandsWhen = new HashMap<String, String>();
-    HashMap<String, String> commandsThen = new HashMap<String, String>();
+    Map<String, String> commandsWhen = new HashMap<String, String>();
+    Map<String, String> commandsThen = new HashMap<String, String>();
 
     @Override
     public void validate() {
@@ -17,24 +15,18 @@ public class BaseTestImpl implements IBaseTest {
     }
 
     @Override
-    public void load() {
-        commandsWhen.put("with_name", When.with_name);
-        commandsWhen.put("in_directory",When.in_directory);
-        commandsWhen.put("triggerId",When.triggerId);
-
-        commandsThen.put("after",Then.after);
-        commandsThen.put("file_count",Then.file_count);
-        commandsThen.put("in_directory",Then.in_directory);
-        commandsThen.put("triggerId",Then.triggerId);
+    public void load(LinkedHashMap<String, Map<String, String>> commandsMap) {
+        commandsWhen = commandsMap.get("When");
+        commandsThen = commandsMap.get("Then");
     }
 
     @Override
-    public HashMap<String, String> getWhenCommands() {
+    public Map<String, String> getWhenCommands() {
         return commandsWhen;
     }
 
     @Override
-    public HashMap<String, String> getThenCommands() {
+    public Map<String, String> getThenCommands() {
         return commandsThen;
     }
 }

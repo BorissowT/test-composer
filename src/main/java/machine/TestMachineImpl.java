@@ -1,18 +1,16 @@
 package machine;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import commands.BaseTestImpl;
 import commands.IBaseTest;
 import fileLoader.IFileLoader;
 import settings.ISettingsSet;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class TestMachineImpl implements ITestMachine {
     IFileLoader fileLoader;
-    IBaseTest actualTest;
+    IBaseTest actualTest = new BaseTestImpl();
     ISettingsSet settings;
 
     public TestMachineImpl(IFileLoader fileLoader) {
@@ -21,9 +19,10 @@ public class TestMachineImpl implements ITestMachine {
 
     @Override
     public void inputTestPath(String path) {
-        IBaseTest testResult = fileLoader.read(path);
-        testResult.validate();
-        actualTest = testResult;
+        LinkedHashMap<String, Map<String, String>> testResult =  fileLoader.read(path);
+        // TODO validate
+        //testResult.validate();
+        actualTest.load(testResult);
     }
 
     @Override
@@ -36,6 +35,7 @@ public class TestMachineImpl implements ITestMachine {
         actualTest.getWhenCommands().forEach((key, value)->{
             settings.executeCommandByName(key,value);
         });
+        // TODO crushes here on casting
         actualTest.getThenCommands().forEach((key, value)->{
             settings.executeCommandByName(key,value);
         });
