@@ -1,3 +1,4 @@
+import commands.AfterCommand;
 import exceptions.*;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
@@ -16,8 +17,10 @@ public class FileTests {
 
     @BeforeAll
     public void setup() {
-        TestMachine = new TestMachineImpl(new YamlReaderImpl());
+        TestMachine = new TestMachineImpl();
         this.Settings = new SettingsImpl();
+        Settings.addReader(new YamlReaderImpl());
+        Settings.addCommand(new AfterCommand());
         TestMachine.loadSettings(Settings);
     }
 

@@ -1,10 +1,6 @@
 package fileLoader;
 
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -14,7 +10,7 @@ import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class YamlReaderImpl implements IFileLoader{
+public class YamlReaderImpl implements IFileReader {
     @Override
     public LinkedHashMap<String, Map<String, String>> read(String path) {
         InputStream inputStream=null;

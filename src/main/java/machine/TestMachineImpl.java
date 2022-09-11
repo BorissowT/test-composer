@@ -2,24 +2,21 @@ package machine;
 
 import commands.BaseTestImpl;
 import commands.IBaseTest;
-import fileLoader.IFileLoader;
+import fileLoader.IFileReader;
 import settings.ISettingsSet;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class TestMachineImpl implements ITestMachine {
-    IFileLoader fileLoader;
+
     IBaseTest actualTest = new BaseTestImpl();
     ISettingsSet settings;
 
-    public TestMachineImpl(IFileLoader fileLoader) {
-        this.fileLoader = fileLoader;
-    }
 
     @Override
     public void inputTestPath(String path) {
-        LinkedHashMap<String, Map<String, String>> testResult =  fileLoader.read(path);
+        LinkedHashMap<String, Map<String, String>> testResult =  settings.getReader().read(path);
         // TODO validate
         //testResult.validate();
         actualTest.load(testResult);
