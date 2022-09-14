@@ -36,9 +36,8 @@ public class FileTests {
     }
 
     @Test
-    public void fileCountHasNoRequiredFieldsTest() throws RequiredFieldIsNotSpecifiedException {
-        TestMachine.inputTestPath("tests/samplesToTest/FileCountHasNoRequiredFieldsTest.yaml");
-        Assertions.assertThrows(RequiredFieldIsNotSpecifiedException.class, ()->{TestMachine.run();});
+    public void fileCountHasNoRequiredFieldsTest() {
+        Assertions.assertThrows(RequiredFieldIsNotSpecifiedException.class, ()->{TestMachine.inputTestPath("tests/samplesToTest/FileCountHasNoRequiredFieldsTest.yaml");});
     }
 
     @Test

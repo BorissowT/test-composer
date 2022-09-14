@@ -31,6 +31,15 @@ public class BaseTestImpl implements IBaseTest {
     @Override
     public void validate() throws RequiredFieldIsNotSpecifiedException {
         checkFileCreatedFields();
+        checkFileCountFields();
+    }
+
+    private void checkFileCountFields() throws RequiredFieldIsNotSpecifiedException {
+        String[] requiredFields = {"file_count", "in_directory"};
+        if(Objects.equals(String.valueOf(commandsWhen.get("triggerId")), "File Count"))
+            validateRequiredFields(commandsWhen, requiredFields);
+        else if(Objects.equals(String.valueOf(commandsThen.get("triggerId")), "File Count"))
+            validateRequiredFields(commandsThen, requiredFields);
     }
 
     private void checkFileCreatedFields() throws RequiredFieldIsNotSpecifiedException {
@@ -44,7 +53,7 @@ public class BaseTestImpl implements IBaseTest {
     private void validateRequiredFields(Map<String, Object> commands, String[] requiredFields) throws RequiredFieldIsNotSpecifiedException {
         for(String requiredCommand: requiredFields){
             if(commands.get(requiredCommand)==null)
-                throw new RequiredFieldIsNotSpecifiedException("required field for " + "File Created" + " is not specified");
+                throw new RequiredFieldIsNotSpecifiedException("required field is not specified");
         }
     }
 
