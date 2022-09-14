@@ -1,23 +1,27 @@
 package fileLoader;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import commands.BaseTestImpl;
-import commands.IBaseTest;
+
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class YamlReaderImpl implements IFileLoader{
+public class YamlReaderImpl implements IFileReader {
     @Override
-    public IBaseTest read(String path) {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        BaseTestImpl FileObject = null;
+    public LinkedHashMap<String, Map<String, Object>> read(String path) {
+        InputStream inputStream=null;
         try {
-            FileObject = mapper.readValue(new File(path), BaseTestImpl.class);
-        } catch (IOException e) {
+            inputStream = new FileInputStream(new File(path));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return FileObject;
+
+        Yaml yaml = new Yaml();
+        LinkedHashMap<String, Map<String, Object>> data = yaml.load(inputStream);
+        return data;
     }
 }

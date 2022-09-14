@@ -1,3 +1,5 @@
+import commands.AfterCommand;
+import exceptions.IncorrectCommandException;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
 import machine.TestMachineImpl;
@@ -5,12 +7,20 @@ import settings.ISettingsSet;
 import settings.SettingsImpl;
 
 public class App {
-    public static void main(String[] args) {
-        ITestMachine TestMachine = new TestMachineImpl(new YamlReaderImpl());
+    public static void main(String[] args){
+        ITestMachine TestMachine = new TestMachineImpl();
         ISettingsSet Settings = new SettingsImpl();
 
+        Settings.addReader(new YamlReaderImpl());
+        Settings.addCommand(new AfterCommand());
+
         TestMachine.loadSettings(Settings);
-        TestMachine.inputTestPath("src/testSamples/test1.yaml");
-        TestMachine.run();
+        TestMachine.inputTestPath("src/main/java/testCases/test1.yaml");
+
+        try {
+            TestMachine.run();
+        } catch (IncorrectCommandException e) {
+            e.printStackTrace();
+        }
     }
 }

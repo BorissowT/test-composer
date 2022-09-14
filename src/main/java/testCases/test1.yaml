@@ -1,7 +1,9 @@
-When: File Created
+When:
+  triggerId: File Created
   with_name: test.foo
   in_directory: /foo/bar
-Then: File Count
-  after: 2s
+Then:
+  triggerId: File Count
+  after: 4s
   file_count: 0
-  in_directoy: /foo/bar
+  in_directory: /foo/bar

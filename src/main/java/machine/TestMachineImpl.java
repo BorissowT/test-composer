@@ -1,37 +1,45 @@
 package machine;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import commands.BaseTestImpl;
 import commands.IBaseTest;
-import fileLoader.IFileLoader;
+import exceptions.IncorrectCommandException;
+import fileLoader.IFileReader;
 import settings.ISettingsSet;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class TestMachineImpl implements ITestMachine {
-    IFileLoader fileLoader;
-    IBaseTest actualTest;
 
-    public TestMachineImpl(IFileLoader fileLoader) {
-        this.fileLoader = fileLoader;
-    }
+    IBaseTest actualTest = new BaseTestImpl();
+    ISettingsSet settings;
+
 
     @Override
     public void inputTestPath(String path) {
-        IBaseTest testResult = fileLoader.read(path);
-        testResult.validate();
-        actualTest = testResult;
+        LinkedHashMap<String, Map<String, Object>> testResult =  settings.getReader().read(path);
+        // TODO validate
+        //testResult.validate();
+        actualTest.load(testResult);
     }
 
     @Override
     public void loadSettings(ISettingsSet settings) {
-
+        this.settings = settings;
     }
 
     @Override
-    public boolean run() {
+    public boolean run() throws IncorrectCommandException {
+        runSection(actualTest.getWhenCommands());
+        runSection(actualTest.getThenCommands());
         return true;
     }
+
+    public boolean runSection(Map<String, Object> commands) throws IncorrectCommandException {
+        for (String key : commands.keySet()) {
+            if(!settings.executeCommandByName(key,String.valueOf(commands.get(key))))
+                return false;
+        }
+        return true;
+    };
 }

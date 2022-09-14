@@ -1,3 +1,4 @@
+import commands.AfterCommand;
 import exceptions.*;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
@@ -16,26 +17,28 @@ public class FileTests {
 
     @BeforeAll
     public void setup() {
-        TestMachine = new TestMachineImpl(new YamlReaderImpl());
+        TestMachine = new TestMachineImpl();
         this.Settings = new SettingsImpl();
+        Settings.addReader(new YamlReaderImpl());
+        Settings.addCommand(new AfterCommand());
         TestMachine.loadSettings(Settings);
     }
 
     @Test
-    public void testSuccessful(){
+    public void testSuccessful() throws IncorrectCommandException {
         TestMachine.inputTestPath("tests/samplesToTest/test1.yaml");
         Assertions.assertTrue(TestMachine.run());
     }
 
     @Test
-    public void whenHasNoRequiredFieldsTest(){
-        TestMachine.inputTestPath("tests/samplesToTest/WhenHasNoRequiredFieldsTest.yaml");
+    public void fileCreatedHasNoRequiredFieldsTest(){
+        TestMachine.inputTestPath("tests/samplesToTest/FileCreatedHasNoRequiredFieldsTest.yaml");
         Assertions.assertThrows(RequiredFieldIsNotSpecifiedException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void thenHasNoRequiredFieldsTest(){
-        TestMachine.inputTestPath("tests/samplesToTest/ThenHasNoRequiredFieldsTest.yaml");
+    public void fileCountHasNoRequiredFieldsTest(){
+        TestMachine.inputTestPath("tests/samplesToTest/FileCountHasNoRequiredFieldsTest.yaml");
         Assertions.assertThrows(RequiredFieldIsNotSpecifiedException.class, ()->{TestMachine.run();});
     }
 
