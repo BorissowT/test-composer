@@ -1,6 +1,7 @@
 package commands;
 
 import exceptions.RequiredFieldIsNotSpecifiedException;
+import exceptions.RequiredOptionNotSpecifiedException;
 
 import java.util.*;
 
@@ -12,7 +13,7 @@ public class BaseTestImpl implements IBaseTest {
     Map<String, Object> commandsThen = new HashMap<String, Object>();
 
     @Override
-    public void load(LinkedHashMap<String, Map<String, Object>> commandsMap) throws RequiredFieldIsNotSpecifiedException {
+    public void load(LinkedHashMap<String, Map<String, Object>> commandsMap) throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         commandsWhen = commandsMap.get("When");
         commandsThen = commandsMap.get("Then");
         validate();
@@ -29,9 +30,15 @@ public class BaseTestImpl implements IBaseTest {
     }
 
     @Override
-    public void validate() throws RequiredFieldIsNotSpecifiedException {
+    public void validate() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
+        checkWhenAndThenOptions();
         checkFileCreatedFields();
         checkFileCountFields();
+    }
+
+    private void checkWhenAndThenOptions() throws RequiredOptionNotSpecifiedException {
+        if (commandsWhen == null||commandsThen==null)
+            throw new RequiredOptionNotSpecifiedException("required option whn or then is not specified");
     }
 
     private void checkFileCountFields() throws RequiredFieldIsNotSpecifiedException {

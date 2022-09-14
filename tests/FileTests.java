@@ -25,7 +25,7 @@ public class FileTests {
     }
 
     @Test
-    public void testSuccessful() throws IncorrectCommandException, RequiredFieldIsNotSpecifiedException {
+    public void testSuccessful() throws IncorrectCommandException, RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/test1.yaml");
         Assertions.assertTrue(TestMachine.run());
     }
@@ -41,73 +41,72 @@ public class FileTests {
     }
 
     @Test
-    public void noWhenOptionTest() throws RequiredFieldIsNotSpecifiedException {
-        TestMachine.inputTestPath("tests/samplesToTest/NoWhenOptionTest.yaml");
-        Assertions.assertThrows(RequiredOptionNotSpecifiedException.class, ()->{TestMachine.run();});
+    public void noWhenOptionTest() {
+
+        Assertions.assertThrows(RequiredOptionNotSpecifiedException.class, ()->{TestMachine.inputTestPath("tests/samplesToTest/NoWhenOption.yaml");});
     }
 
     @Test
-    public void noThenOptionTest() throws RequiredFieldIsNotSpecifiedException {
-        TestMachine.inputTestPath("tests/samplesToTest/NoThenOptionTest.yaml");
-        Assertions.assertThrows(RequiredOptionNotSpecifiedException.class, ()->{TestMachine.run();});
+    public void noThenOptionTest() {
+        Assertions.assertThrows(RequiredOptionNotSpecifiedException.class, ()->{TestMachine.inputTestPath("tests/samplesToTest/NoThenOption.yaml");});
     }
 
     @Test
-    public void notCorrectTriggerIdTest() throws RequiredFieldIsNotSpecifiedException {
+    public void notCorrectTriggerIdTest() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/NotCorrectTriggerId.yaml");
         Assertions.assertThrows(TriggerIsNotCorrectException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void notCorrectTriggerIdTest2() throws RequiredFieldIsNotSpecifiedException {
+    public void notCorrectTriggerIdTest2() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/NotCorrectTriggerId2.yaml");
         Assertions.assertThrows(TriggerIsNotCorrectException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void notCorrectTriggerIdTest3() throws RequiredFieldIsNotSpecifiedException {
+    public void notCorrectTriggerIdTest3() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/NotCorrectTriggerId3.yaml");
         Assertions.assertThrows(TriggerIsNotCorrectException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void notCorrectTriggerIdTest4() throws RequiredFieldIsNotSpecifiedException {
+    public void notCorrectTriggerIdTest4() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/NotCorrectTriggerId4.yaml");
         Assertions.assertThrows(TriggerIsNotCorrectException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void incorrectCommandsTest() throws RequiredFieldIsNotSpecifiedException {
+    public void incorrectCommandsTest() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/IncorrectCommands.yaml");
         Assertions.assertThrows(IncorrectCommandException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void fileCountMinusParameterTest() throws RequiredFieldIsNotSpecifiedException {
+    public void fileCountMinusParameterTest() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/FileCountMinusParameter.yaml");
         Assertions.assertThrows(ConstrainArgumentException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void directoryNotExistsTest() throws RequiredFieldIsNotSpecifiedException {
+    public void directoryNotExistsTest() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/DirectoryNotExists.yaml");
         Assertions.assertThrows(LocationException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void directoryNotExistsTest2() throws RequiredFieldIsNotSpecifiedException {
+    public void directoryNotExistsTest2() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/DirectoryNotExists2.yaml");
         Assertions.assertThrows(LocationException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void afterTooBigParameterTest() throws RequiredFieldIsNotSpecifiedException {
+    public void afterTooBigParameterTest() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/AfterTooBigParameter.yaml");
         Assertions.assertThrows(ConstrainArgumentException.class, ()->{TestMachine.run();});
     }
 
     @Test
-    public void afterMinusParameterTest() throws RequiredFieldIsNotSpecifiedException {
+    public void afterMinusParameterTest() throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
         TestMachine.inputTestPath("tests/samplesToTest/AfterMinusParameter.yaml");
         Assertions.assertThrows(ConstrainArgumentException.class, ()->{TestMachine.run();});
     }
