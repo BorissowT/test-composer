@@ -5,6 +5,7 @@ import commands.IBaseTest;
 import exceptions.IncorrectCommandException;
 import exceptions.RequiredFieldIsNotSpecifiedException;
 import exceptions.RequiredOptionNotSpecifiedException;
+import exceptions.TriggerIsNotCorrectException;
 import fileLoader.IFileReader;
 import settings.ISettingsSet;
 
@@ -18,7 +19,7 @@ public class TestMachineImpl implements ITestMachine {
 
 
     @Override
-    public void inputTestPath(String path) throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException {
+    public void inputTestPath(String path) throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException {
         LinkedHashMap<String, Map<String, Object>> testResult =  settings.getReader().read(path);
         // TODO validate
         actualTest.load(testResult);

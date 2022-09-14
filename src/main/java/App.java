@@ -2,6 +2,7 @@ import commands.AfterCommand;
 import exceptions.IncorrectCommandException;
 import exceptions.RequiredFieldIsNotSpecifiedException;
 import exceptions.RequiredOptionNotSpecifiedException;
+import exceptions.TriggerIsNotCorrectException;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
 import machine.TestMachineImpl;
@@ -22,7 +23,7 @@ public class App {
         try {
             TestMachine.inputTestPath("src/main/java/testCases/test1.yaml");
             TestMachine.run();
-        } catch (IncorrectCommandException | RequiredFieldIsNotSpecifiedException | RequiredOptionNotSpecifiedException e) {
+        } catch (IncorrectCommandException | RequiredFieldIsNotSpecifiedException | RequiredOptionNotSpecifiedException | TriggerIsNotCorrectException e) {
             e.printStackTrace();
         }
     }
