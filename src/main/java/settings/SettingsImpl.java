@@ -1,6 +1,7 @@
 package settings;
 
 import commands.ICommand;
+import exceptions.IncorrectCommandException;
 import fileLoader.IFileReader;
 
 import java.io.FileReader;
@@ -29,10 +30,12 @@ public class SettingsImpl implements ISettingsSet {
     }
 
     @Override
-    public void executeCommandByName(String commandName, String arg) {
-        commands.forEach((command)->{
+    public boolean executeCommandByName(String commandName, String arg) throws IncorrectCommandException {
+
+        for(ICommand command : commands){
             if(Objects.equals(command.getName(), commandName))
-                command.execute(arg);
-        });
+                return command.execute(arg);
+        }
+        throw new IncorrectCommandException("command " + commandName + " does not registered as a command");
     }
 }

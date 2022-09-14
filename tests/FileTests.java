@@ -25,7 +25,7 @@ public class FileTests {
     }
 
     @Test
-    public void testSuccessful(){
+    public void testSuccessful() throws IncorrectCommandException {
         TestMachine.inputTestPath("tests/samplesToTest/test1.yaml");
         Assertions.assertTrue(TestMachine.run());
     }

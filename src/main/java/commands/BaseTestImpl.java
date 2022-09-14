@@ -6,8 +6,8 @@ public class BaseTestImpl implements IBaseTest {
     public WhenImpl When;
     public ThenImpl Then;
 
-    Map<String, String> commandsWhen = new HashMap<String, String>();
-    Map<String, String> commandsThen = new HashMap<String, String>();
+    Map<String, Object> commandsWhen = new HashMap<String, Object>();
+    Map<String, Object> commandsThen = new HashMap<String, Object>();
 
     @Override
     public void validate() {
@@ -15,18 +15,19 @@ public class BaseTestImpl implements IBaseTest {
     }
 
     @Override
-    public void load(LinkedHashMap<String, Map<String, String>> commandsMap) {
+    public void load(LinkedHashMap<String, Map<String, Object>> commandsMap) {
         commandsWhen = commandsMap.get("When");
         commandsThen = commandsMap.get("Then");
     }
 
     @Override
-    public Map<String, String> getWhenCommands() {
+    public Map<String, Object> getWhenCommands() {
         return commandsWhen;
     }
 
     @Override
-    public Map<String, String> getThenCommands() {
+    public Map<String, Object> getThenCommands() {
+        System.out.println("dd");
         return commandsThen;
     }
 }

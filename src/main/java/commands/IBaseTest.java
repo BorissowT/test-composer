@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface IBaseTest {
     void validate();
-    void load(LinkedHashMap<String, Map<String, String>> testMap);
-    Map<String, String> getWhenCommands();
-    Map<String, String> getThenCommands();
+    void load(LinkedHashMap<String, Map<String, Object>> testMap);
+    Map<String, Object> getWhenCommands();
+    Map<String, Object> getThenCommands();
 }

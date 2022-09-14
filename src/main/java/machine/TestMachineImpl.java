@@ -2,6 +2,7 @@ package machine;
 
 import commands.BaseTestImpl;
 import commands.IBaseTest;
+import exceptions.IncorrectCommandException;
 import fileLoader.IFileReader;
 import settings.ISettingsSet;
 
@@ -16,7 +17,7 @@ public class TestMachineImpl implements ITestMachine {
 
     @Override
     public void inputTestPath(String path) {
-        LinkedHashMap<String, Map<String, String>> testResult =  settings.getReader().read(path);
+        LinkedHashMap<String, Map<String, Object>> testResult =  settings.getReader().read(path);
         // TODO validate
         //testResult.validate();
         actualTest.load(testResult);
@@ -28,14 +29,17 @@ public class TestMachineImpl implements ITestMachine {
     }
 
     @Override
-    public boolean run() {
-        actualTest.getWhenCommands().forEach((key, value)->{
-            settings.executeCommandByName(key,value);
-        });
-        // TODO crushes here on casting
-        actualTest.getThenCommands().forEach((key, value)->{
-            settings.executeCommandByName(key,value);
-        });
+    public boolean run() throws IncorrectCommandException {
+        runSection(actualTest.getWhenCommands());
+        runSection(actualTest.getThenCommands());
         return true;
     }
+
+    public boolean runSection(Map<String, Object> commands) throws IncorrectCommandException {
+        for (String key : commands.keySet()) {
+            if(!settings.executeCommandByName(key,String.valueOf(commands.get(key))))
+                return false;
+        }
+        return true;
+    };
 }

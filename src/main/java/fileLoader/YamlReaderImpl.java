@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class YamlReaderImpl implements IFileReader {
     @Override
-    public LinkedHashMap<String, Map<String, String>> read(String path) {
+    public LinkedHashMap<String, Map<String, Object>> read(String path) {
         InputStream inputStream=null;
         try {
             inputStream = new FileInputStream(new File(path));
@@ -21,7 +21,7 @@ public class YamlReaderImpl implements IFileReader {
         }
 
         Yaml yaml = new Yaml();
-        LinkedHashMap<String, Map<String, String>> data = yaml.load(inputStream);
+        LinkedHashMap<String, Map<String, Object>> data = yaml.load(inputStream);
         return data;
     }
 }
