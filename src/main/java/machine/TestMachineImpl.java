@@ -3,6 +3,7 @@ package machine;
 import commands.BaseTestImpl;
 import commands.IBaseTest;
 import exceptions.IncorrectCommandException;
+import exceptions.RequiredFieldIsNotSpecifiedException;
 import fileLoader.IFileReader;
 import settings.ISettingsSet;
 
@@ -16,10 +17,9 @@ public class TestMachineImpl implements ITestMachine {
 
 
     @Override
-    public void inputTestPath(String path) {
+    public void inputTestPath(String path) throws RequiredFieldIsNotSpecifiedException {
         LinkedHashMap<String, Map<String, Object>> testResult =  settings.getReader().read(path);
         // TODO validate
-        //testResult.validate();
         actualTest.load(testResult);
     }
 
@@ -30,6 +30,7 @@ public class TestMachineImpl implements ITestMachine {
 
     @Override
     public boolean run() throws IncorrectCommandException {
+
         runSection(actualTest.getWhenCommands());
         runSection(actualTest.getThenCommands());
         return true;

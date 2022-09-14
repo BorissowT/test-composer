@@ -1,5 +1,7 @@
 package commands;
 
+import exceptions.RequiredFieldIsNotSpecifiedException;
+
 import java.util.*;
 
 public class BaseTestImpl implements IBaseTest {
@@ -10,14 +12,10 @@ public class BaseTestImpl implements IBaseTest {
     Map<String, Object> commandsThen = new HashMap<String, Object>();
 
     @Override
-    public void validate() {
-
-    }
-
-    @Override
-    public void load(LinkedHashMap<String, Map<String, Object>> commandsMap) {
+    public void load(LinkedHashMap<String, Map<String, Object>> commandsMap) throws RequiredFieldIsNotSpecifiedException {
         commandsWhen = commandsMap.get("When");
         commandsThen = commandsMap.get("Then");
+        validate();
     }
 
     @Override
@@ -27,7 +25,28 @@ public class BaseTestImpl implements IBaseTest {
 
     @Override
     public Map<String, Object> getThenCommands() {
-        System.out.println("dd");
         return commandsThen;
     }
+
+    @Override
+    public void validate() throws RequiredFieldIsNotSpecifiedException {
+        checkFileCreatedFields();
+    }
+
+    private void checkFileCreatedFields() throws RequiredFieldIsNotSpecifiedException {
+        String[] requiredFields = {"with_name", "in_directory"};
+        if(Objects.equals(String.valueOf(commandsWhen.get("triggerId")), "File Created"))
+            validateRequiredFields(commandsWhen, requiredFields);
+        else if(Objects.equals(String.valueOf(commandsThen.get("triggerId")), "File Created"))
+            validateRequiredFields(commandsThen, requiredFields);
+    }
+
+    private void validateRequiredFields(Map<String, Object> commands, String[] requiredFields) throws RequiredFieldIsNotSpecifiedException {
+        for(String requiredCommand: requiredFields){
+            if(commands.get(requiredCommand)==null)
+                throw new RequiredFieldIsNotSpecifiedException("required field for " + "File Created" + " is not specified");
+        }
+    }
+
+
 }
