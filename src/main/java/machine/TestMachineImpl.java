@@ -28,13 +28,13 @@ public class TestMachineImpl implements ITestMachine {
     }
 
     @Override
-    public boolean run() throws IncorrectCommandException, ConstrainArgumentException {
+    public boolean run() throws IncorrectCommandException, ConstrainArgumentException, LocationException {
         runSection(actualTest.getWhenCommands());
         runSection(actualTest.getThenCommands());
         return true;
     }
 
-    public boolean runSection(Map<String, Object> commands) throws IncorrectCommandException, ConstrainArgumentException {
+    public boolean runSection(Map<String, Object> commands) throws IncorrectCommandException, ConstrainArgumentException, LocationException {
         for (String key : commands.keySet()) {
             if(!settings.executeCommandByName(key,String.valueOf(commands.get(key))))
                 return false;

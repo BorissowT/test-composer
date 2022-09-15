@@ -20,11 +20,7 @@ public class App {
         try {
             TestMachine.inputTestPath("src/main/java/testCases/test1.yaml");
             TestMachine.run();
-        } catch (IncorrectCommandException |
-                RequiredFieldIsNotSpecifiedException |
-                RequiredOptionNotSpecifiedException |
-                TriggerIsNotCorrectException |
-                ConstrainArgumentException e) {
+        } catch (IncorrectCommandException | RequiredFieldIsNotSpecifiedException | RequiredOptionNotSpecifiedException | TriggerIsNotCorrectException | ConstrainArgumentException | LocationException e) {
             e.printStackTrace();
         }
     }

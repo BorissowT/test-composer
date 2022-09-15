@@ -3,6 +3,7 @@ package settings;
 import commands.ICommand;
 import exceptions.ConstrainArgumentException;
 import exceptions.IncorrectCommandException;
+import exceptions.LocationException;
 import fileLoader.IFileReader;
 
 import java.io.FileReader;
@@ -31,7 +32,7 @@ public class SettingsImpl implements ISettingsSet {
     }
 
     @Override
-    public boolean executeCommandByName(String commandName, String arg) throws IncorrectCommandException, ConstrainArgumentException {
+    public boolean executeCommandByName(String commandName, String arg) throws IncorrectCommandException, ConstrainArgumentException, LocationException {
 
         for(ICommand command : commands){
             if(Objects.equals(command.getName(), commandName))
