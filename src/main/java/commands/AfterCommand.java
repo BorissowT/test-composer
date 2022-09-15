@@ -1,5 +1,7 @@
 package commands;
 
+import exceptions.IncorrectCommandException;
+
 public class AfterCommand implements ICommand{
 
     String name = "after";
@@ -10,7 +12,8 @@ public class AfterCommand implements ICommand{
     }
 
     @Override
-    public boolean execute(String arg) {
+    public boolean execute(String arg) throws IncorrectCommandException {
+        validateArg(arg);
         arg = arg.replace("s","");
         int time = Integer.parseInt(arg);
         for (int i = 0; i<time; i++){
@@ -23,5 +26,11 @@ public class AfterCommand implements ICommand{
         }
 
         return true;
+    }
+
+    public void validateArg(String arg) throws IncorrectCommandException {
+        String pattern = "(\\d)(\\d|s)";
+        if(!arg.matches(pattern))
+            throw new IncorrectCommandException("wrong argument");
     }
 }

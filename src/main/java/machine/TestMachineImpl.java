@@ -2,10 +2,7 @@ package machine;
 
 import commands.BaseTestImpl;
 import commands.IBaseTest;
-import exceptions.IncorrectCommandException;
-import exceptions.RequiredFieldIsNotSpecifiedException;
-import exceptions.RequiredOptionNotSpecifiedException;
-import exceptions.TriggerIsNotCorrectException;
+import exceptions.*;
 import fileLoader.IFileReader;
 import settings.ISettingsSet;
 
@@ -31,14 +28,13 @@ public class TestMachineImpl implements ITestMachine {
     }
 
     @Override
-    public boolean run() throws IncorrectCommandException {
-
+    public boolean run() throws IncorrectCommandException, ConstrainArgumentException {
         runSection(actualTest.getWhenCommands());
         runSection(actualTest.getThenCommands());
         return true;
     }
 
-    public boolean runSection(Map<String, Object> commands) throws IncorrectCommandException {
+    public boolean runSection(Map<String, Object> commands) throws IncorrectCommandException, ConstrainArgumentException {
         for (String key : commands.keySet()) {
             if(!settings.executeCommandByName(key,String.valueOf(commands.get(key))))
                 return false;

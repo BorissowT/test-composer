@@ -1,4 +1,4 @@
-import commands.AfterCommand;
+import commands.*;
 import exceptions.*;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
@@ -20,12 +20,19 @@ public class FileTests {
         TestMachine = new TestMachineImpl();
         this.Settings = new SettingsImpl();
         Settings.addReader(new YamlReaderImpl());
+
         Settings.addCommand(new AfterCommand());
+        InDirectoryCommand inDirectoryCommand = new InDirectoryCommand();
+        Settings.addCommand(inDirectoryCommand);
+        Settings.addCommand(new FileCountCommand(inDirectoryCommand));
+        Settings.addCommand(new TriggerIdCommand());
+        Settings.addCommand(new WithNameCommand());
+
         TestMachine.loadSettings(Settings);
     }
 
     @Test
-    public void testSuccessful() throws IncorrectCommandException, RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException {
+    public void testSuccessful() throws IncorrectCommandException, RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException, ConstrainArgumentException {
         TestMachine.inputTestPath("tests/samplesToTest/test1.yaml");
         Assertions.assertTrue(TestMachine.run());
     }

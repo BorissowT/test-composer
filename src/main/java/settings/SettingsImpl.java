@@ -1,6 +1,7 @@
 package settings;
 
 import commands.ICommand;
+import exceptions.ConstrainArgumentException;
 import exceptions.IncorrectCommandException;
 import fileLoader.IFileReader;
 
@@ -30,7 +31,7 @@ public class SettingsImpl implements ISettingsSet {
     }
 
     @Override
-    public boolean executeCommandByName(String commandName, String arg) throws IncorrectCommandException {
+    public boolean executeCommandByName(String commandName, String arg) throws IncorrectCommandException, ConstrainArgumentException {
 
         for(ICommand command : commands){
             if(Objects.equals(command.getName(), commandName))
