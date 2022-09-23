@@ -1,9 +1,9 @@
 When:
   triggerId: File Created
   with_name: test.foo
-  in_directory: src/main/java/testCases
+  in_directory: /foo/bar
 Then:
   triggerId: File Count
   after: 11s
   file_count: 0
-  in_directory: src/main/java/testCases
+  in_directory: /foo/bar
