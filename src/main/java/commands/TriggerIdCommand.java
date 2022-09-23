@@ -9,21 +9,23 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class TriggerIdCommand implements ICommand{
+
     String name = "triggerId";
     String createType = "File Created";
     String countType = "File Count";
 
     WithNameCommand withNameCommand = null;
     InDirectoryCommand inDirectoryCommand = null;
-
+    FileCountCommand fileCountCommand = null;
 
 
     public TriggerIdCommand() {
     }
-    public TriggerIdCommand(WithNameCommand withNameCommandArg, InDirectoryCommand inDirectoryCommandArg) {
+    public TriggerIdCommand(WithNameCommand withNameCommandArg, InDirectoryCommand inDirectoryCommandArg, FileCountCommand fileCountCommandArg) {
         // File Created
         withNameCommand = withNameCommandArg;
         inDirectoryCommand = inDirectoryCommandArg;
+        fileCountCommand = fileCountCommandArg;
     }
 
     @Override
@@ -34,10 +36,10 @@ public class TriggerIdCommand implements ICommand{
     @Override
     public boolean execute(String arg) throws IncorrectCommandException, ConstrainArgumentException {
         if(Objects.equals(arg, createType))
-            createFileCustom();
+            return createFileCustom();
         if(Objects.equals(arg, countType))
-            countFiles();
-        return true;
+            return countFiles();
+        return false;
     }
 
     @Override
@@ -45,11 +47,16 @@ public class TriggerIdCommand implements ICommand{
 
     }
 
-    private void countFiles() {
-        // TODO
+    private boolean countFiles() throws IncorrectCommandException {
+        String path = inDirectoryCommand.getPath();
+        if(path==null)
+            throw new IncorrectCommandException("path not specified");
+        File directory=new File("src/"+path);
+        int fileCount=directory.list().length;
+        return fileCount == Integer.parseInt(fileCountCommand.getArgCount());
     }
 
-    private void createFileCustom() throws ConstrainArgumentException {
+    private boolean createFileCustom() throws ConstrainArgumentException {
         String fileName = null;
         String filePath = null;
         try {
@@ -70,5 +77,6 @@ public class TriggerIdCommand implements ICommand{
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        return true;
     }
 }

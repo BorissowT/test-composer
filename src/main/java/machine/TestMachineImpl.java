@@ -17,10 +17,17 @@ public class TestMachineImpl implements ITestMachine {
 
 
     @Override
-    public void inputTestPath(String path) throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException {
+    public void inputTestPath(String path) throws RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException, ComponentException {
+        ifReaderRegistered();
         LinkedHashMap<String, Map<String, Object>> testResult =  settings.getReader().read(path);
         // TODO validate
         actualTest.load(testResult);
+    }
+
+    private void ifReaderRegistered() throws ComponentException {
+            if (settings.getReader()==null)
+                throw new ComponentException("Reader is not specified");
+
     }
 
     @Override
@@ -31,9 +38,8 @@ public class TestMachineImpl implements ITestMachine {
     @Override
     public boolean run() throws IncorrectCommandException, ConstrainArgumentException, LocationException {
         loadArgs();
-        runSection(actualTest.getWhenCommands());
-        runSection(actualTest.getThenCommands());
-        return true;
+        boolean response = runSection(actualTest.getWhenCommands()) && runSection(actualTest.getThenCommands());
+        return response;
     }
 
     private void loadArgs() throws ConstrainArgumentException, LocationException, IncorrectCommandException {
