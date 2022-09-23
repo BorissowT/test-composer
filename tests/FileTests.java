@@ -24,14 +24,22 @@ public class FileTests {
         Settings.addCommand(new AfterCommand());
         InDirectoryCommand inDirectoryCommand = new InDirectoryCommand();
         WithNameCommand withNameCommand = new WithNameCommand();
+        FileCountCommand fileCountCommand = new FileCountCommand();
+        Settings.addCommand(fileCountCommand);
         Settings.addCommand(inDirectoryCommand);
-        Settings.addCommand(new FileCountCommand(inDirectoryCommand));
-        Settings.addCommand(new TriggerIdCommand(withNameCommand, inDirectoryCommand));
+        Settings.addCommand(new TriggerIdCommand(withNameCommand, inDirectoryCommand, fileCountCommand));
         Settings.addCommand(withNameCommand);
 
         TestMachine.loadSettings(Settings);
     }
 
+    @Test
+    public void testFail() throws IncorrectCommandException, RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException, ConstrainArgumentException, LocationException, ComponentException {
+        TestMachine.inputTestPath("tests/samplesToTest/testFalse.yaml");
+        Assertions.assertFalse(TestMachine.run());
+    }
+
+    // 2 files in folder
     @Test
     public void testSuccessful() throws IncorrectCommandException, RequiredFieldIsNotSpecifiedException, RequiredOptionNotSpecifiedException, TriggerIsNotCorrectException, ConstrainArgumentException, LocationException, ComponentException {
         TestMachine.inputTestPath("tests/samplesToTest/test1.yaml");

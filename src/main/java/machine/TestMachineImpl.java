@@ -38,9 +38,8 @@ public class TestMachineImpl implements ITestMachine {
     @Override
     public boolean run() throws IncorrectCommandException, ConstrainArgumentException, LocationException {
         loadArgs();
-        runSection(actualTest.getWhenCommands());
-        runSection(actualTest.getThenCommands());
-        return true;
+        boolean response = runSection(actualTest.getWhenCommands()) && runSection(actualTest.getThenCommands());
+        return response;
     }
 
     private void loadArgs() throws ConstrainArgumentException, LocationException, IncorrectCommandException {

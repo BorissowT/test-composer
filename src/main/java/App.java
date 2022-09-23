@@ -15,9 +15,10 @@ public class App {
         Settings.addCommand(new AfterCommand());
         InDirectoryCommand inDirectoryCommand = new InDirectoryCommand();
         WithNameCommand withNameCommand = new WithNameCommand();
+        FileCountCommand fileCountCommand = new FileCountCommand();
         Settings.addCommand(inDirectoryCommand);
-        Settings.addCommand(new FileCountCommand(inDirectoryCommand));
-        Settings.addCommand(new TriggerIdCommand(withNameCommand, inDirectoryCommand));
+        Settings.addCommand(fileCountCommand);
+        Settings.addCommand(new TriggerIdCommand(withNameCommand, inDirectoryCommand, fileCountCommand));
         Settings.addCommand(withNameCommand);
 
         TestMachine.loadSettings(Settings);
