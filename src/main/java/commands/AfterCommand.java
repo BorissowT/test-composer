@@ -6,6 +6,7 @@ import exceptions.IncorrectCommandException;
 public class AfterCommand implements ICommand{
 
     String name = "after";
+    private int time;
 
     @Override
     public String getName() {
@@ -14,9 +15,7 @@ public class AfterCommand implements ICommand{
 
     @Override
     public boolean execute(String arg) throws  ConstrainArgumentException {
-        validateArg(arg);
-        arg = arg.replace("s","");
-        int time = Integer.parseInt(arg);
+
         for (int i = 0; i<time; i++){
             try {
                 Thread.sleep(1000);
@@ -27,6 +26,13 @@ public class AfterCommand implements ICommand{
         }
 
         return true;
+    }
+
+    @Override
+    public void load(String arg) throws ConstrainArgumentException {
+        validateArg(arg);
+        arg = arg.replace("s","");
+        this.time = Integer.parseInt(arg);
     }
 
     public void validateArg(String arg) throws  ConstrainArgumentException {

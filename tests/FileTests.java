@@ -23,10 +23,11 @@ public class FileTests {
 
         Settings.addCommand(new AfterCommand());
         InDirectoryCommand inDirectoryCommand = new InDirectoryCommand();
+        WithNameCommand withNameCommand = new WithNameCommand();
         Settings.addCommand(inDirectoryCommand);
         Settings.addCommand(new FileCountCommand(inDirectoryCommand));
-        Settings.addCommand(new TriggerIdCommand());
-        Settings.addCommand(new WithNameCommand());
+        Settings.addCommand(new TriggerIdCommand(withNameCommand, inDirectoryCommand));
+        Settings.addCommand(withNameCommand);
 
         TestMachine.loadSettings(Settings);
     }

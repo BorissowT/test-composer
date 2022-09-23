@@ -40,4 +40,12 @@ public class SettingsImpl implements ISettingsSet {
         }
         throw new IncorrectCommandException("command " + commandName + " does not registered as a command");
     }
+
+    @Override
+    public void loadArguments(String commandName, String arg) throws ConstrainArgumentException, LocationException {
+        for(ICommand command : commands){
+            if(Objects.equals(command.getName(), commandName))
+                 command.load(arg);
+        }
+    }
 }

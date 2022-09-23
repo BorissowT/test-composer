@@ -9,6 +9,7 @@ public class FileCountCommand implements ICommand{
 
     String name = "file_count";
     InDirectoryCommand inDirectoryDependency;
+    String argCount = null;
 
     public FileCountCommand(InDirectoryCommand inDirectoryDependency) {
         this.inDirectoryDependency = inDirectoryDependency;
@@ -20,14 +21,19 @@ public class FileCountCommand implements ICommand{
     }
 
     @Override
-    public boolean execute(String argCount) throws IncorrectCommandException, ConstrainArgumentException {
-        validateArg(argCount);
+    public boolean execute(String arg) throws IncorrectCommandException, ConstrainArgumentException {
         String path = inDirectoryDependency.getPath();
         if(path==null)
             throw new IncorrectCommandException("path not specified");
-        File directory=new File(path);
+        File directory=new File("src/"+path);
         int fileCount=directory.list().length;
         return fileCount == Integer.parseInt(argCount);
+    }
+
+    @Override
+    public void load(String arg) throws ConstrainArgumentException {
+        validateArg(arg);
+        argCount = arg;
     }
 
     private void validateArg(String argCount) throws ConstrainArgumentException {

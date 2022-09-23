@@ -1,8 +1,10 @@
 package commands;
 
+import exceptions.ConstrainArgumentException;
 import exceptions.IncorrectCommandException;
 import exceptions.LocationException;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,13 +20,18 @@ public class InDirectoryCommand implements ICommand {
     }
 
     @Override
-    public boolean execute(String arg) throws IncorrectCommandException, LocationException {
+    public void load(String arg) throws LocationException {
         validateIfPathExists(arg);
-        return false;
+        path=arg;
+    }
+
+    @Override
+    public boolean execute(String arg) {
+        return true;
     }
 
     private void validateIfPathExists(String arg) throws LocationException {
-        Path path = Paths.get(arg);
+        Path path = Paths.get("src/"+arg);
         if(!Files.exists(path))
             throw new LocationException("directory does not exist");
     }

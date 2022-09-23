@@ -2,9 +2,30 @@ package commands;
 
 import exceptions.ConstrainArgumentException;
 import exceptions.IncorrectCommandException;
+import exceptions.LocationException;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 public class TriggerIdCommand implements ICommand{
     String name = "triggerId";
+    String createType = "File Created";
+    String countType = "File Count";
+
+    WithNameCommand withNameCommand = null;
+    InDirectoryCommand inDirectoryCommand = null;
+
+
+
+    public TriggerIdCommand() {
+    }
+    public TriggerIdCommand(WithNameCommand withNameCommandArg, InDirectoryCommand inDirectoryCommandArg) {
+        // File Created
+        withNameCommand = withNameCommandArg;
+        inDirectoryCommand = inDirectoryCommandArg;
+    }
+
     @Override
     public String getName() {
         return name;
@@ -12,7 +33,42 @@ public class TriggerIdCommand implements ICommand{
 
     @Override
     public boolean execute(String arg) throws IncorrectCommandException, ConstrainArgumentException {
-        //TODO
+        if(Objects.equals(arg, createType))
+            createFileCustom();
+        if(Objects.equals(arg, countType))
+            countFiles();
         return true;
+    }
+
+    @Override
+    public void load(String arg) throws ConstrainArgumentException, LocationException {
+
+    }
+
+    private void countFiles() {
+        // TODO
+    }
+
+    private void createFileCustom() throws ConstrainArgumentException {
+        String fileName = null;
+        String filePath = null;
+        try {
+            fileName = withNameCommand.getFileName();
+            filePath = inDirectoryCommand.getPath();
+        }
+        catch (java.lang.NullPointerException e){
+            throw new ConstrainArgumentException("path or name of file are not specified");
+        }
+        try {
+            File myObj = new File("src/"+filePath+"/"+fileName);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }
