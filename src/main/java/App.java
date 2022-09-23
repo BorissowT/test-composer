@@ -1,5 +1,5 @@
 import commands.AfterCommand;
-import exceptions.IncorrectCommandException;
+import exceptions.*;
 import fileLoader.YamlReaderImpl;
 import machine.ITestMachine;
 import machine.TestMachineImpl;
@@ -15,11 +15,12 @@ public class App {
         Settings.addCommand(new AfterCommand());
 
         TestMachine.loadSettings(Settings);
-        TestMachine.inputTestPath("src/main/java/testCases/test1.yaml");
+
 
         try {
+            TestMachine.inputTestPath("src/main/java/testCases/test1.yaml");
             TestMachine.run();
-        } catch (IncorrectCommandException e) {
+        } catch (IncorrectCommandException | RequiredFieldIsNotSpecifiedException | RequiredOptionNotSpecifiedException | TriggerIsNotCorrectException | ConstrainArgumentException | LocationException e) {
             e.printStackTrace();
         }
     }
